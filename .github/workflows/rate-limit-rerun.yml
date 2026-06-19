@@ -47,6 +47,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Ensure scripts directory exists
+        run: mkdir -p scripts
+
       - name: Scan for rate-limit failures
         id: scan
         env:
