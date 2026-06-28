@@ -90,7 +90,7 @@ jobs:
           FSA_MANAGED: ${{ vars.FSA_MANAGED }}
           REPO_OWNER: ${{ github.repository_owner }}
         run: |
-          source scripts/includes/fsa-mode.sh
+          source scripts/includes/fsa-mode.sh || { echo "fsa-mode.sh not found"; exit 1; }
           if fsa_is_managed; then
             echo "managed=true" >> "$GITHUB_OUTPUT"
             echo "Managed by fork-sync-all — quota reserve handled centrally, skipping."
