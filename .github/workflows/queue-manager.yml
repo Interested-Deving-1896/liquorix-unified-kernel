@@ -1,29 +1,5 @@
 name: Queue Manager
 
-# Prevents quota exhaustion cascades and runner starvation by keeping the
-# GitHub Actions queue shallow.
-#
-# Two passes on every run:
-#
-#   Dedup  — for each workflow, cancel all queued runs except the newest.
-#            Eliminates backlog pile-ups where the same workflow queued 5×
-#            while quota was exhausted.
-#
-#   Evict  — cancel any queued run that has waited longer than STALE_QUEUE_MIN
-#            (default 25 min). Jobs that can't get a runner in that window will
-#            be re-queued by rate-limit-rerun or the next schedule tick.
-#
-# Protected workflows are never cancelled regardless of age:
-#   Rotate Secret Token, Cancel Stale Runs, Cancel Runs After Token Rotation,
-#   Quota Monitor, Quota Reserve, Rate-Limit Re-trigger, Validate Config,
-#   Token Health, Critical Deploy
-#
-# Schedule: every 30 minutes — frequent enough to catch pile-ups before they
-# drain a full quota reset, infrequent enough to cost <10 API calls/hr.
-# Skips entirely when quota < 300 to avoid contributing to exhaustion cascades.
-#
-# Also runs on manual dispatch for immediate cleanup.
-
 on:
   schedule:
     - cron: '*/30 * * * *'
@@ -42,7 +18,7 @@ on:
 
 concurrency:
   group: queue-manager
-  cancel-in-progress: true   # Only one instance needed at a time
+  cancel-in-progress: true
 
 permissions:
   actions: write
