@@ -117,8 +117,16 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+      - name: Check for quota-instrument.sh
+        id: check-script
+        run: |
+          if [ ! -f scripts/includes/quota-instrument.sh ]; then
+            echo "Quota instrument script not found."
+            exit 1
+          fi
+
       - name: Translate docs
-        if: steps.quota.outputs.skip == 'false'
+        if: steps.quota.outputs.skip == 'false' && steps.check-script.outcome == 'success'
         env:
           SOURCE_LANG: ${{ inputs.source_lang || 'en' }}
           TARGET_LANG: ${{ inputs.target_lang || 'it' }}
