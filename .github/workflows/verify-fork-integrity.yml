@@ -1,25 +1,8 @@
 name: Verify Fork Integrity
 
-# Compares this repo's default-branch HEAD against its upstream (fork parent
-# or explicit upstream_override from .ota/config.yml). Reports whether the
-# fork is in sync, behind, ahead, or diverged.
-#
-# Designed for consumer repos that receive the infra-core template profile.
-# In managed mode (fork-sync-all present) this is a no-op — fork-sync-all
-# handles upstream sync centrally. In autonomous mode it runs locally.
-#
-# Upstream resolution order:
-#   1. UPSTREAM_REPO env var (set from .ota/config.yml upstream_override if present)
-#   2. GitHub fork parent API field (auto-detected for true forks)
-#
-# Called by:
-#   - ota-self-update.yml (pre-check before applying payload)
-#   - Manual dispatch for ad-hoc drift checks
-#   - Weekly schedule as a standing health check
-
 on:
   schedule:
-    - cron: '25 6 * * 1'   # Weekly Monday 06:25 UTC — staggered from ota-self-update
+    - cron: '25 6 * * 1'
   workflow_dispatch:
     inputs:
       upstream_override:
@@ -84,7 +67,7 @@ jobs:
           FSA_MANAGED: ${{ vars.FSA_MANAGED }}
           REPO_OWNER: ${{ github.repository_owner }}
         run: |
-          source scripts/includes/fsa-mode.sh
+          source .github/scripts/includes/fsa-mode.sh
           if fsa_is_managed; then
             echo "managed=true" >> "$GITHUB_OUTPUT"
             echo "Managed by fork-sync-all — fork integrity verified centrally, skipping."
@@ -96,7 +79,6 @@ jobs:
         id: ota
         if: steps.quota.outputs.skip == 'false' && steps.fsa.outputs.managed == 'false'
         run: |
-          # Prefer explicit input, then .ota/config.yml upstream_override, then blank (auto-detect)
           override="${{ inputs.upstream_override }}"
           if [[ -z "$override" && -f .ota/config.yml ]]; then
             override=$(grep "^upstream_override:" .ota/config.yml \
