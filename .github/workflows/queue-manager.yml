@@ -62,6 +62,7 @@ jobs:
 
       - name: Check FSA mode
         id: fsa
+        if: steps.quota.outputs.skip == 'false'
         env:
           GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
           FSA_MANAGED: ${{ vars.FSA_MANAGED }}
