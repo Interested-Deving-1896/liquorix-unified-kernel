@@ -1,6 +1,7 @@
 # liquorix-unified-kernel
 
-[![Built with Ona](https://ona.com/build-with-ona.svg)](https://app.ona.com/#https://github.com/Interested-Deving-1896/liquorix-unified-kernel)
+[![Built with Ona](https://ona.com/build-with-ona.svg)](https://app.ona.com/#https://github.com/Interested-Deving-1896/liquorix-unified-kernel) [![KDE Eco](https://img.shields.io/badge/KDE%20Eco-certified-brightgreen?logo=kde&logoColor=white&style=flat-square)](https://eco.kde.org/) [![Blue Angel](https://img.shields.io/badge/Blue%20Angel-DE--UZ%20215-0055a4?style=flat-square)](https://www.blauer-engel.de/en/certification/criteria) [![Energy](https://api.green-coding.io/v1/ci/badge/get?repo=Interested-Deving-1896%2Fliquorix-unified-kernel&branch=main&workflow=eco-audit.yml)](https://metrics.green-coding.io/ci-index.html)
+
 
 <!-- AI:start:what-it-does -->
 This project provides a unified build and installation system for the Liquorix kernel, designed to work across multiple Linux distributions and architectures. It simplifies the process of building and installing the Liquorix kernel by offering a consistent interface and customizable options for different environments. It is intended for developers and system administrators who need to build or deploy the Liquorix kernel on various platforms.
@@ -77,9 +78,9 @@ Direct commits to OSP or OOC are detected and opened as PRs back to `Interested-
 ## Contributors
 
 <!-- AI:start:contributors -->
-[@Interested-Deving-1896](https://github.com/Interested-Deving-1896): 300 commits  
-[@web-flow](https://github.com/web-flow): 1 commit  
-[@ona-agent](https://github.com/ona-agent): 1 commit  
+[@Interested-Deving-1896](https://github.com/Interested-Deving-1896): 300 commits
+[@web-flow](https://github.com/web-flow): 1 commit
+[@ona-agent](https://github.com/ona-agent): 1 commit
 
 *Note: This repository appears to be a mirror. Please refer to the upstream source for additional details.*
 <!-- AI:end:contributors -->
@@ -95,6 +96,20 @@ _Original project — no upstream fork._
 <!-- AI:start:resources -->
 _No additional resource files found._
 <!-- AI:end:resources -->
+
+<!-- AI:start:accessibility -->
+This repo uses automated accessibility auditing via `check-accessibility.yml`.
+
+Checks include: CODEOWNERS ownership coverage, README screen-reader compatibility,
+WCAG 2.1 AA HTML compliance, audio overview (espeak-ng), and Braille output (liblouis).
+
+
+
+
+Run the [Check Accessibility](https://github.com/Interested-Deving-1896/liquorix-unified-kernel/actions/workflows/check-accessibility.yml)
+workflow to generate the first report and accessibility artifacts.
+See [DOCS/accessibility.md](https://github.com/Interested-Deving-1896/liquorix-unified-kernel/blob/main/DOCS/accessibility.md) for the full reference.
+<!-- AI:end:accessibility -->
 
 ## License
 
