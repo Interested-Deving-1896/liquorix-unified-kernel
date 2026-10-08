@@ -79,11 +79,11 @@ Direct commits to OSP or OOC are detected and opened as PRs back to `Interested-
 ## Contributors
 
 <!-- AI:start:contributors -->
-[@Interested-Deving-1896](https://github.com/Interested-Deving-1896): 300 commits
-[@web-flow](https://github.com/web-flow): 1 commit
-[@ona-agent](https://github.com/ona-agent): 1 commit
-
-*Note: This repository appears to be a mirror. Please refer to the upstream source for additional details.*
+| Contributor | Commits |
+|---|---|
+| [@Interested-Deving-1896](https://github.com/Interested-Deving-1896) | 563 |
+| [@web-flow](https://github.com/web-flow) | 1 |
+| [@ona-agent](https://github.com/ona-agent) | 1 |
 <!-- AI:end:contributors -->
 
 ## Origins
