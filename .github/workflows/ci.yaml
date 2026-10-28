@@ -28,17 +28,55 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Install shellcheck
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq shellcheck
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
 
-      - name: Run tests
-        run: ./tests/run-tests.sh
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run unit tests
+        run: npm test
 
   validate:
-    name: Profile Validation
+    name: BDFS Incus Profile Validation
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
 
-      - name: Validate profiles
-        run: ./profiles/validate.sh
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate BDFS Incus profile YAML and required settings
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+          import YAML from 'yaml';
+
+          const profile = YAML.parse(readFileSync('ci/incus-profile-bdfs.yaml', 'utf8'));
+          const required = [
+            ['name', 'bdfs-privileged'],
+            ['config.security.privileged', 'true'],
+            ['config.security.nesting', 'true'],
+            ['devices.dev.type', 'disk'],
+            ['devices.dev.source', '/dev'],
+            ['devices.dev.path', '/dev'],
+            ['devices.fuse.type', 'unix-char'],
+            ['devices.fuse.source', '/dev/fuse'],
+            ['devices.fuse.path', '/dev/fuse'],
+          ];
+
+          for (const [path, expected] of required) {
+            const actual = path.split('.').reduce((value, key) => value?.[key], profile);
+            if (actual !== expected) {
+              console.error(`Invalid BDFS Incus profile: ${path} expected ${JSON.stringify(expected)}, got ${JSON.stringify(actual)}`);
+              process.exitCode = 1;
+            }
+          }
+          NODE
