@@ -62,8 +62,8 @@ jobs:
           const profile = YAML.parse(readFileSync('ci/incus-profile-bdfs.yaml', 'utf8'));
           const required = [
             ['name', 'bdfs-privileged'],
-            ['config.security.privileged', 'true'],
-            ['config.security.nesting', 'true'],
+            ['config', 'security.privileged', 'true'],
+            ['config', 'security.nesting', 'true'],
             ['devices.dev.type', 'disk'],
             ['devices.dev.source', '/dev'],
             ['devices.dev.path', '/dev'],
@@ -72,8 +72,10 @@ jobs:
             ['devices.fuse.path', '/dev/fuse'],
           ];
 
-          for (const [path, expected] of required) {
-            const actual = path.split('.').reduce((value, key) => value?.[key], profile);
+          for (const [section, path, expected] of required) {
+            const actual = section === 'config'
+              ? profile.config?.[path]
+              : path.split('.').reduce((value, key) => value?.[key], profile);
             if (actual !== expected) {
               console.error(`Invalid BDFS Incus profile: ${path} expected ${JSON.stringify(expected)}, got ${JSON.stringify(actual)}`);
               process.exitCode = 1;
