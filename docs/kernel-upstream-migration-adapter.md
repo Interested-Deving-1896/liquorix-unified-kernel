@@ -32,3 +32,13 @@ The current implementation is visible in `scripts/lib/build-common.sh` (`fetch_s
 - **Stage 3 — validation:** distro/architecture builds, module checks, package signing, reproducibility, and runtime/boot evidence where available.
 
 No kernel source, patch, package, or signing configuration is changed by this documentation.
+## KUMBE manifest v1.1 mapping
+
+Represent at least these as separate `source_inputs` records:
+
+- `kernel-source`: the vanilla kernel.org archive, with exact archive version and SHA-256 digest.
+- `provider-package`: the Liquorix package archive, with its own release identifier and SHA-256 digest.
+- `provider-patches`: the exact selected patch series and its immutable source identity; do not infer its identity from the vanilla kernel archive.
+- `config-bundle`: architecture-specific configuration inputs where they have an independent origin/version.
+
+Use `integrity: verified` only after validating the digest against trusted checksum/signature evidence. If the archive or trusted evidence is unavailable, report that state and block the migration plan rather than fabricating a Git commit or treating a version label as immutable.
