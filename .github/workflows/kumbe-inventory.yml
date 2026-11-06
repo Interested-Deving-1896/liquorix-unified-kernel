@@ -7,7 +7,7 @@ on:
       - "tests/kernel-migration/**"
       - ".github/workflows/kumbe-inventory.yml"
   push:
-    branches: [main]
+    branches: [main, feat/kumbe-provider-adapter-contract]
     paths:
       - "scripts/kumbe-inventory.py"
       - "tests/kernel-migration/**"
