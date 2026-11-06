@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-SCRIPT = Path(__file__).resolve().parents[1] / "kumbe-inventory.py"
+SCRIPT = Path(__file__).resolve().parents[2] / "scripts" / "kumbe-inventory.py"
 PROVIDER = "liquorix-unified-kernel"
 SOURCE_PATH = ".upstream-cache/linux-*"
 PATCH_PATH = ".upstream-cache/liquorix-package-*/linux-liquorix/debian/patches"
