@@ -36,7 +36,8 @@ require-release = \
 	install \
 	build-debian build-ubuntu build-arch build-fedora build-gentoo build \
 	bootstrap-debian bootstrap-ubuntu bootstrap-arch bootstrap-fedora \
-	clean
+	clean \
+	bdfs-module
 
 help: ## Show available targets
 	@echo "Liquorix Unified Build System"
@@ -86,6 +87,25 @@ build-gentoo: ## Build Gentoo kernel with genkernel (needs KERNEL_VERSION=x.y.z)
 
 build: ## Build for a single release (needs DISTRO= and RELEASE= for deb targets)
 	$(SCRIPTS)/build.sh --distro $(DISTRO) $(if $(RELEASE),--release $(RELEASE),) --arch $(ARCH) --jobs $(PROCS) --build $(BUILD)
+
+# ── Btrfs-DwarFS Framework (BDFS) external module ─────────────────────────────
+# Liquorix builds kernel packages inside Docker, so callers must supply a
+# configured source/build tree when they want to compile the external module.
+BDFS_DIR ?= $(shell \
+	if [ -f "$(CURDIR)/../btrfs-dwarfs-framework/integrations/kernels/build-module.sh" ]; then \
+		echo "$(CURDIR)/../btrfs-dwarfs-framework"; \
+	elif [ -f "$(CURDIR)/../../btrfs-dwarfs-framework/integrations/kernels/build-module.sh" ]; then \
+		echo "$(CURDIR)/../../btrfs-dwarfs-framework"; \
+	else echo ""; fi)
+KERNEL_BUILD_DIR ?=
+BDFS_ARTIFACT_DIR ?= $(CURDIR)/artifacts/bdfs
+
+bdfs-module: ## Build and stage BDFS .ko against an explicitly configured kernel tree
+	@[ -n "$(BDFS_DIR)" ] || { echo "Set BDFS_DIR=/path/to/btrfs-dwarfs-framework"; exit 1; }
+	@[ -f "$(BDFS_DIR)/integrations/kernels/build-module.sh" ] || { echo "BDFS external-module helper not found; use the BDFS integration branch or a revision with the helper merged."; exit 1; }
+	@[ -n "$(KERNEL_BUILD_DIR)" ] || { echo "Set KERNEL_BUILD_DIR=/path/to/configured/liquorix/kernel/tree. This repository's package build uses Docker and does not expose a persistent configured source tree by default."; exit 1; }
+	@[ -f "$(KERNEL_BUILD_DIR)/Makefile" ] && [ -f "$(KERNEL_BUILD_DIR)/.config" ] || { echo "Configured kernel tree not found at $(KERNEL_BUILD_DIR)."; exit 1; }
+	bash "$(BDFS_DIR)/integrations/kernels/build-module.sh" "$(KERNEL_BUILD_DIR)" "$(BDFS_ARTIFACT_DIR)"
 
 # ── Bootstrap Docker images ───────────────────────────────────────────────────
 # bootstrap-* targets fetch upstream Dockerfiles + container scripts from
