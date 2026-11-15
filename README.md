@@ -13,6 +13,7 @@
 
 
 
+
 <!-- AI:start:what-it-does -->
 This project provides a unified build and installation system for the Liquorix kernel, designed to work across multiple Linux distributions and architectures. It simplifies the process of building and installing the Liquorix kernel by offering a consistent interface and customizable options for different environments. It is intended for developers and system administrators who need to build or deploy the Liquorix kernel on various platforms.
 <!-- AI:end:what-it-does -->
@@ -90,7 +91,7 @@ Direct commits to OSP or OOC are detected and opened as PRs back to `Interested-
 <!-- AI:start:contributors -->
 | Contributor | Commits |
 |---|---|
-| [@Interested-Deving-1896](https://github.com/Interested-Deving-1896) | 681 |
+| [@Interested-Deving-1896](https://github.com/Interested-Deving-1896) | 682 |
 | [@web-flow](https://github.com/web-flow) | 1 |
 | [@ona-agent](https://github.com/ona-agent) | 1 |
 <!-- AI:end:contributors -->
