@@ -135,3 +135,8 @@ for accessibility guidance.
 <!-- AI:start:license -->
 <!-- License not detected — add a LICENSE file to this repo. -->
 <!-- AI:end:license -->
+
+
+## Framework hardware support
+
+Framework Computer hardware source provenance, model-specific compatibility requirements and safe integration boundaries are documented in [Framework hardware support](docs/framework-hardware-support.md). This is an integration contract, not a claim of tested hardware support.
