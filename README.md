@@ -76,6 +76,10 @@ The repository uses GitHub Actions for continuous integration. Below is a summar
 Refer to the `.github/workflows` directory for detailed configurations. Ensure required secrets are added in the repository settings under "Secrets and variables."
 <!-- AI:end:ci -->
 
+## TUXEDO hardware support
+
+Optional TUXEDO driver and vendor-kernel integration is documented in [TUXEDO hardware support](docs/tuxedo-hardware-support.md). The GitHub source repositories are read-only mirrors; see that document for upstream contribution destinations and compatibility safeguards.
+
 ## Mirror chain
 
 <!-- AI:start:mirror-chain -->
@@ -131,3 +135,8 @@ for accessibility guidance.
 <!-- AI:start:license -->
 <!-- License not detected — add a LICENSE file to this repo. -->
 <!-- AI:end:license -->
+
+
+## Framework hardware support
+
+Framework Computer hardware source provenance, model-specific compatibility requirements and safe integration boundaries are documented in [Framework hardware support](docs/framework-hardware-support.md). This is an integration contract, not a claim of tested hardware support.
